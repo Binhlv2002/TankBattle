@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.InputSystem.OnScreen;
+using UnityEngine.UI;
+
+public class UIManager : MonoBehaviour
+{
+    [SerializeField] private OnScreenStick leftStick;
+    [SerializeField] private OnScreenStick rightStick;
+    [SerializeField] private TextMeshProUGUI angleText;
+    [SerializeField] private TextMeshProUGUI powerText;
+    [SerializeField] private Button fireButton;
+
+    private void Awake()
+    {
+        GameManager.OnGameStateChanged += HandleOnGameStateChanged;
+        RotateTankTurret.OnJoystickValueChanged += HandleOnJoystickValueChanged; ;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnGameStateChanged -= HandleOnGameStateChanged;
+        RotateTankTurret.OnJoystickValueChanged -= HandleOnJoystickValueChanged;
+    }
+    private void HandleOnJoystickValueChanged(int angle, float power)
+    {
+        angleText.text = angle.ToString();
+        powerText.text = power.ToString();
+    }
+
+    private void HandleOnGameStateChanged(GameState gameState)
+    {
+        fireButton.interactable = gameState == GameState.PlayerTurn;
+        leftStick.enabled = gameState == GameState.PlayerTurn;
+        rightStick.enabled = gameState == GameState.PlayerTurn;
+    }
+
+    public void OnFireButtonPress()
+    {
+        GameManager.instance.UpdateGameState(GameState.EnemyTurn);
+    }
+}
