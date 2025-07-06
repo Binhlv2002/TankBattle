@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
     private async void HandleDecision()
     {
-        await Task.Delay(1000);
+        await Task.Delay(500);
 
         if (!enemyTank.gameObject.activeSelf)
         {
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     private async void HandleEnemyTurn()
     {
-        await Task.Delay(3000);
+        await Task.Delay(2000);
         if (enemyTank.gameObject.activeSelf)
         {
             enemyTank.GetComponent<TankShooting>().SetupRequimentStatForAI();
