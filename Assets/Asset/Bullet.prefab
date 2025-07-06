@@ -4969,8 +4969,8 @@ MonoBehaviour:
     m_Bits: 128
   maxDamage: 20
   explosionRadius: 5
-  lifeTime: 2
-  explosionForce: 300
+  lifeTime: 3
+  explosionForce: 500
 --- !u!54 &3524476445674001164
 Rigidbody:
   m_ObjectHideFlags: 0
