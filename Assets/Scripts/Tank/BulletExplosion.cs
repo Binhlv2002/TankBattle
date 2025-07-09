@@ -10,6 +10,7 @@ public class BulletExplosion : MonoBehaviour
     [SerializeField] private float explosionRadius = 5f;
     [SerializeField] private float lifeTime = 2f;
     [SerializeField] private float explosionForce = 1000f;
+    [SerializeField] private ParticleSystem explosionParticles;
 
     private void Start()
     {
@@ -39,6 +40,8 @@ public class BulletExplosion : MonoBehaviour
             tankHealth.TakeDamage(damage);
            
         }
+        explosionParticles.Play();
+        explosionParticles.gameObject.SetActive(false);
         Destroy(gameObject);
     }
 

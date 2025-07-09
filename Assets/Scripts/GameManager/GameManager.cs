@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -47,6 +48,12 @@ public class GameManager : MonoBehaviour
             case GameState.Defeat:
                 Debug.Log("Game State: Game Over");
                 break;
+            case GameState.Paused:
+                Debug.Log("Game State: Game Paused");
+                break;
+            case GameState.MainMenu:
+                Debug.Log("Game State: Main Menu");
+                break;
         }
 
         OnGameStateChanged?.Invoke(gameState);
@@ -76,6 +83,7 @@ public class GameManager : MonoBehaviour
         await Task.Delay(2000);
         if (enemyTank.gameObject.activeSelf)
         {
+            await MoveEnemyTank();
             enemyTank.GetComponent<TankShooting>().SetupRequimentStatForAI();
             enemyTank.GetComponent<RotateTankTurret>().RotateRandomAngle();
             await Task.Delay(500);
@@ -85,10 +93,44 @@ public class GameManager : MonoBehaviour
         UpdateGameState(GameState.Decision);
     }
 
+    private async Task MoveEnemyTank()
+    {
+        // Gọi hàm di chuyển của enemy tank
+        EnemyMovement enemyMovement = enemyTank.GetComponent<EnemyMovement>();
+        if (enemyMovement != null)
+        {
+            await enemyMovement.ExecuteMovement();
+        }
+    }
+
     private void HandlePlayerTurn()
     {
         playerTankFuel.RefillFuelAfterTurn();
         playerTankFuel.SetFuelCondition();
+    }
+
+    public void ReplayGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        UpdateGameState(GameState.PlayerTurn);
+    }
+
+    public void ExitToMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+        UpdateGameState(GameState.MainMenu);
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+        UpdateGameState(GameState.Paused);
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        UpdateGameState(GameState.PlayerTurn);
     }
 
 }

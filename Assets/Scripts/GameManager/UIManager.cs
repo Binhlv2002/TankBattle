@@ -12,11 +12,26 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI angleText;
     [SerializeField] private TextMeshProUGUI powerText;
     [SerializeField] private Button fireButton;
+    [SerializeField] private GameObject victoryPanel;
+    [SerializeField] private GameObject defeatPanel;
 
     private void Awake()
     {
         GameManager.OnGameStateChanged += HandleOnGameStateChanged;
         RotateTankTurret.OnJoystickValueChanged += HandleOnJoystickValueChanged; ;
+    }
+
+    private void Update()
+    {
+        if (GameManager.instance.currentGameState == GameState.Victory)
+        {
+            victoryPanel.SetActive(true);
+        }
+
+        if (GameManager.instance.currentGameState == GameState.Defeat)
+        {
+            defeatPanel.SetActive(true);
+        }
     }
 
     private void OnDestroy()

@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,12 +13,16 @@ public class TankHealth : MonoBehaviour
     [SerializeField] private Image fillImage;
     [SerializeField] private Color fullHealthColor;
     [SerializeField] private Color lowHealthColor;
+    [SerializeField] private GameObject explosionPrefab;
 
-    private ParticleSystem expolosionParticles;
+    private ParticleSystem explosionParticles;
 
     private void Awake()
     {
-        
+        GameObject explosionObject = Instantiate(explosionPrefab, transform);
+        explosionParticles = explosionObject.GetComponent<ParticleSystem>();
+        explosionObject.transform.localPosition = Vector3.zero;
+        explosionObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -56,7 +60,28 @@ public class TankHealth : MonoBehaviour
     private void OnDeath()
     {
         isDead = true;
-       
+
+        
+
+
+        explosionParticles.gameObject.SetActive(true);
+        explosionParticles.Play();
+
+        StartCoroutine(DisableTankAfterExplosion());
+    }
+
+    private IEnumerator DisableTankAfterExplosion()
+    {
+        yield return new WaitForSeconds(2f);
+        if (tankSide == TankSideType.Enemy)
+        {
+            GameManager.instance.UpdateGameState(GameState.Victory);
+        }
+        else if (tankSide == TankSideType.Player)
+        {
+            GameManager.instance.UpdateGameState(GameState.Defeat);
+        }
+
         gameObject.SetActive(false);
     }
 }

@@ -4854,8 +4854,8 @@ GameObject:
   - component: {fileID: 33624544424198368}
   - component: {fileID: 23227812853602014}
   - component: {fileID: 136522884417654972}
-  - component: {fileID: -8192702100751595988}
   - component: {fileID: 3524476445674001164}
+  - component: {fileID: 7821671736900395064}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -4952,25 +4952,6 @@ CapsuleCollider:
   m_Height: 0.65
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-8192702100751595988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1346145665620568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bd48cbae5dc38943a525fcd08a1f260, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tankMask:
-    serializedVersion: 2
-    m_Bits: 128
-  maxDamage: 20
-  explosionRadius: 5
-  lifeTime: 3
-  explosionForce: 500
 --- !u!54 &3524476445674001164
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4998,6 +4979,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7821671736900395064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346145665620568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd48cbae5dc38943a525fcd08a1f260, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankMask:
+    serializedVersion: 2
+    m_Bits: 128
+  maxDamage: 120
+  explosionRadius: 5
+  lifeTime: 2
+  explosionForce: 500
+  explosionParticles: {fileID: 7187393024123294135, guid: 5f2bc166e68df974bb952c4ec5c43454,
+    type: 3}
 --- !u!1 &1474323805535688
 GameObject:
   m_ObjectHideFlags: 0

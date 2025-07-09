@@ -9,4 +9,6 @@ public enum GameState
     Victory,
     Defeat,
     Decision,
+    Paused,
+    MainMenu,
 }
